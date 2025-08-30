@@ -19,78 +19,66 @@
 
 ## Description
 
-**Url Breaker** is a lightweight Python tool designed to perform URL fuzzing.  
-It automatically generates various "broken" or modified variants of a target URL and tests each one to identify unexpected behaviors or potential server-side vulnerabilities.
+**Windows Update Manager** is a lightweight Python tool designed to manage and update installed software on a Windows system.  
+It scans all installed applications via the Windows registry and cross-references them with `winget` to identify available updates.  
+Users can view installed software, check for updates, and perform updates centrally from a single interactive interface.
 
-This tool is particularly useful for web security testing, allowing you to verify if certain paths or URL variants not intended by the application are accessible or produce different responses.
+This tool is particularly useful for keeping multiple applications up-to-date efficiently, especially for users managing many programs on a Windows machine.
 
 ## Key Features
-- Automatic generation of URL variants including encodings, special sequences, path manipulations, and more.  
-- Support for a custom wordlist (`wordlist.txt`) to test your own additional variants.  
-- Sends HTTP requests to each variant and displays the HTTP status code.  
-- Colorized terminal output for easier result interpretation.  
-- Robust error handling to prevent process interruptions due to network issues.  
-- Interactive console interface with mode selection and display preferences.  
-- Multithreaded scanning for faster execution.  
-- Stylish dynamic progress bar in reduced mode for a smooth UX.
+- Retrieves all installed software and their versions directly from the Windows registry.
+- Checks for available updates using `winget`.
+- Allows updating all software at once or updating a specific application by its `winget` ID.
+- Verifies the version after each update to ensure successful installation.
+- Interactive console interface with command-based navigation.
+- Stylish white dynamic progress bar when scanning installed software.
+- Colorized terminal output for better readability.
+- Displays available commands after every action for easier usage.
+- Cross-verification of software versions post-update.
 
 ## Requirements
-- Python 3.6 or higher  
+- Windows 10 or higher
+- Python 3.6 or higher
 - Python packages:
-  - `requests`  
   - `colorama`
 
 ## Installation
 Clone the repository or download the source files :
 ```bash
-git clone https://github.com/V1ltrr/Version-Updater.git
-cd Version-Updater
-pip install requests colorama
+git clone https://github.com/V1ltrr/version-updater.git
+cd windows-update-manager
+pip install colorama
 ```
 ## Usage
 Run the script by launching :
 ```bash
-python url_breaker.py
+python version_updater.py
 ```
 ### Steps
-1. Select the fuzzing mode:  
-   - Default built-in list  
-   - Custom wordlist from `wordlist.txt`  
-   - Exit the program
+1. Use one of the available commands :
+- list → Display all installed software.
+- updates → Check which software has available updates.
+- upgrade all → Update all software available via winget.
+- upgrade <ID> → Update a specific software by its winget ID.
+- exit → Quit the program.
      
-2. Select the display mode :  
-   - Extended mode: view all tested URLs and their HTTP codes  
-   - Reduced mode: view only a summary (200 & 403) with a progress bar
-     
-2. Enter the target URL:  
-   - Must include the protocol (`http://` or `https://`)  
-   - No spaces allowed  
-   - Example: `https://example.com/admin`
+2. Follow on-screen instructions to perform updates and verify software versions.
 
 ## Project Structure
 ```text
 Version-Updater/
 ├── LICENCE              # This documentation file
 ├── README.md            # This documentation file
-├── url_breaker.py       # Main script
-├── wordlist.txt         # Optional custom variants file
+├── version_updater.py   # Main script
 ```
 
 ## Internal Details
-
-- Uses `requests` for HTTP requests.  
-- URL variants are built using `urllib.parse.urljoin` to ensure valid URLs.  
-- Handles network exceptions gracefully.  
-- Uses `colorama` for colored terminal output.  
-- Interactive CLI with `print()` and `input()` for user interaction.
-- Uses concurrent.futures.ThreadPoolExecutor for concurrent requests.
-
-## Limitations and Future Work
-
-- Current fuzzing is based on a static list; future improvements could include dynamic variant generation.   
-- Content comparison to detect significant differences between responses.  
-- Exporting results to CSV or JSON.  
-- Supporting other HTTP methods like POST or PUT.
+- Uses winreg to read installed software from the Windows registry.
+- Uses subprocess to interact with winget for updates.
+- Colorama is used for colorized terminal output.
+- Interactive CLI with print() and input() for user commands.
+- Progress bar displayed during scanning of installed software.
+- After each update, the script rechecks the installed version to confirm success.
 
 ## Contributing
 Contributions are welcome! To contribute :
